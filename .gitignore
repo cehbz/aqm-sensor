@@ -1,0 +1,31 @@
+# ESP-IDF build artifacts
+firmware/build/
+firmware/sdkconfig
+firmware/sdkconfig.old
+firmware/managed_components/
+firmware/dependencies.lock
+
+# Secrets
+firmware/main/secrets.h
+
+# macOS
+.DS_Store
+
+# Editor / tool artifacts
+.vscode/
+.claude/
+nohup.out
+
+# KiCad auto-generated / temp files
+fp-info-cache
+~*.lck
+_autosave-*
+\#auto_saved_files\#
+*.bak
+*.rpt
+
+# KiCad backups - redundant with git history
+*-backups/
+*.kicad_sch-bak
+*.kicad_pcb-bak
+*.kicad_net
