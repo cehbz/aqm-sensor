@@ -15,6 +15,7 @@ firmware/main/secrets.h
 .vscode/
 .claude/
 nohup.out
+__pycache__/
 
 # KiCad auto-generated / temp files
 fp-info-cache
