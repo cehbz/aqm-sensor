@@ -14,23 +14,21 @@ When reasoning about the KiCad files, use the kct tool whenever possible for ana
 - **Power**: 5V via ESP32 USB-C, 3.3V from ESP32 onboard regulator
 - **PCB**: 2-layer, ~45x30mm, +3.3V pour on F.Cu, GND plane on B.Cu
 
-## Known Issues (v1)
+## Notes
 
-- ESP32-C3 SuperMini footprint is **rotated 180 degrees** — antenna cutout is at the wrong end. Module must be inserted flipped to match pin assignments.
-- PMS5003 connector (J3) has **VCC/GND swapped** (pin 1=GND, pin 2=5V, but PMS5003 expects pin 1=VCC, pin 2=GND).
-- PMS5003 cable that ships with the sensor **mirrors the pin order** (pin 1↔8). The PCB layout must account for this in the next rev.
 - SK6812 VDD is powered from 3.3V (below 3.7V datasheet min) — works in practice.
 - SK6812 pin 1 (marked with triangle/chamfer) is VSS/GND, not VDD.
+- PMS5003 cable mirrors pin order (pin 1↔8). J1 wiring accounts for this.
 
-## Pin Mapping (with module inserted flipped to match footprint)
+## Pin Mapping
 
 | GPIO | Net | Function |
 |------|-----|----------|
 | GPIO0 | /LED | SK6812 DIN (WS2812 protocol) |
-| GPIO1 | /PMS_SET | PMS5003 SET (high=normal, low=sleep) |
-| GPIO2 | /PMS_RX | ESP TX → PMS5003 RXD |
-| GPIO3 | /PMS_TX | PMS5003 TXD → ESP RX (through R5 1k) |
-| GPIO4 | /PMS_RESET | PMS5003 RESET (active low) |
+| GPIO1 | /PMS_RESET | PMS5003 RESET (active low) |
+| GPIO2 | /PMS_TX | PMS5003 TXD → ESP RX (through R1 1k) |
+| GPIO3 | /PMS_RX | ESP TX → PMS5003 RXD |
+| GPIO4 | /PMS_SET | PMS5003 SET (high=normal, low=sleep) |
 | GPIO8 | /I2C_SDA | QWIIC SDA (also onboard blue LED) |
 | GPIO9 | /I2C_SCL | QWIIC SCL |
 
