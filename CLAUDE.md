@@ -34,9 +34,9 @@ When reasoning about the KiCad files, use the kct tool whenever possible for ana
 
 ## Firmware
 
-ESP-IDF v5.x project in `firmware/`. Uses `espressif/led_strip` component (v3.x) from ESP component registry.
+ESP-IDF v6 project in `firmware/`. Currently running WiFi + NTP + MQTT + PMS5003 + HA Discovery (direct WiFi, smoke test architecture).
 
-- Build: `source ~/esp/esp-idf/export.sh && cd firmware && idf.py build`
+- Build: `idf.py build` (wrapper at ~/bin/idf.py handles environment)
 - Flash + monitor: `idf.py -p /dev/cu.usbmodem1101 flash monitor`
 - WiFi credentials: `firmware/main/secrets.h` (gitignored). Copy `secrets.h.example` to get started.
 - WiFi tested at reduced TX power (8.5 dBm) for bad-xtal ESP32-C3 SuperMini variants
@@ -51,6 +51,15 @@ ESP-IDF v5.x project in `firmware/`. Uses `espressif/led_strip` component (v3.x)
 - GND net needs a `PWR_FLAG` symbol — KiCad requires a `power_output` on every net with `power_input` pins.
 - Any power rail not directly output by a component pin (e.g., regulator output through an inductor) needs `PWR_FLAG`.
 
+## Network Architecture and Domain Model
+
+See `../aqm_fan_controller/CLAUDE.md` for the full architectural analysis and domain model. Summary:
+- Moving to ESP-WIFI-MESH with T-Display S3 as root node and MQTT bridge
+- Current direct WiFi firmware is for smoke testing / bring-up
+- This board hosts two Devices: a **Pms5003** (Sensor) that produces **PmsMeasurement** values, and a **StatusLed** (RGB light, visible to HA). They are independent — coordination between them is application policy, not entity behavior
+- The Gateway timestamps measurements on arrival; mesh nodes don't run NTP
+
 ## Related Projects
 - aqm_fan_controller at ../aqm_fan_controller — fan controller board (TPS562201, MOSFET, QWIIC)
-- cyd-aqm at ../cyd-aqm — display
+- aqm_sen55_tdisplays3 at ../aqm_sen55_tdisplays3 — T-Display S3 gateway + display + SEN55 sensor
+- cyd-aqm at ../cyd-aqm — CYD gateway (original plan, blocked)

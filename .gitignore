@@ -4,6 +4,7 @@ firmware/sdkconfig
 firmware/sdkconfig.old
 firmware/managed_components/
 firmware/dependencies.lock
+firmware/.cache/
 
 # Secrets
 firmware/main/secrets.h
@@ -30,3 +31,4 @@ _autosave-*
 *.kicad_sch-bak
 *.kicad_pcb-bak
 *.kicad_net
+.history/
